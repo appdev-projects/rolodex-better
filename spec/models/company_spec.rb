@@ -15,6 +15,31 @@
 require "rails_helper"
 
 describe "Company" do
+  it "has class method alphabetize", points: 1 do
+    
+    alphabetized_company_records = []
+    
+    netflix = Company.new
+    netflix.name = "Netflix"
+    netflix.save
+    
+    amd = Company.new
+    amd.name = "AMD"
+    amd.save
+    
+    made_in_my_moms_basement_llc = Company.new
+    made_in_my_moms_basement_llc.name = "Made In My Mom's Basement"
+    made_in_my_moms_basement_llc.save
+    
+    alphabetized_company_records.push(amd)    
+    alphabetized_company_records.push(made_in_my_moms_basement_llc)
+    alphabetized_company_records.push(netflix)
+
+    expect(Company.alphabetize.to_a).to eql(alphabetized_company_records)
+  end
+end
+
+describe "Company" do
   it "has instance method age", points: 1 do
     netflix = Company.new
     netflix.founded_on = Date.parse("August 29, 1997")

@@ -8,7 +8,6 @@
 #  last_name     :string
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
-#  company_id    :integer
 #
 
 class Contact < ApplicationRecord
@@ -23,5 +22,9 @@ class Contact < ApplicationRecord
   
   def legal_adult?
     age >= 18
+  end
+  
+  def Contact.alphabatize_by_last_name
+    Contact.all.order(last_name: :asc)
   end
 end

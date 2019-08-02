@@ -8,26 +8,12 @@
 #  last_name     :string
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
-#  company_id    :integer
 #
 
 require "rails_helper"
 
 describe "Contact" do
-  it "has a foreign key for Company called company_id", points: 1 do
-    new_contact = Contact.new
-    expect(new_contact.attributes).to include("company_id")
-  end
-end
-
-describe "Contact" do
-  it "has a foreign key for Company that is type Integer", points: 1 do
-    expect(Contact.column_for_attribute("company_id").type).to be(:integer)
-  end
-end
-
-describe "Contact" do
-  it "has an instance method for full_name", points: 1 do
+  it "has an instance method called full_name", points: 1 do
     new_contact = Contact.new
     new_contact.save
     expect(new_contact.methods).to include(:full_name)
@@ -35,7 +21,7 @@ describe "Contact" do
 end
 
 describe "Contact" do
-  it "has an instance method called full_name that returns the combination of first_name and last_name", points: 2 do
+  it "has an instance method called full_name that returns the combination of first_name and last_name", points: 1 do
     aubrey_plaza = Contact.new
     aubrey_plaza.first_name = "Aubrey"
     aubrey_plaza.last_name = "Plaza"
@@ -76,5 +62,24 @@ describe "Contact" do
     skai_jackson.date_of_birth = Date.parse("2002-04-08")
     skai_jackson.save
     expect(skai_jackson.legal_adult?).to be(Date.today.year - skai_jackson.date_of_birth.year > 18)
+  end
+end
+
+describe "Contact" do
+  it "has a class method called alphabatize_by_last_name", points: 1 do
+    skai_jackson = Contact.new
+    skai_jackson.last_name = "Jackson"
+    skai_jackson.save
+    
+    aubrey_plaza = Contact.new
+    aubrey_plaza.last_name = "Plaza"
+    aubrey_plaza.save
+    
+    dwayne_the_rock_johnson = Contact.new
+    dwayne_the_rock_johnson.last_name = "Johnson"
+    dwayne_the_rock_johnson.save
+    
+    contacts = [skai_jackson, dwayne_the_rock_johnson, aubrey_plaza]
+    expect(Contact.alphabatize_by_last_name.to_a).to eql(contacts)
   end
 end

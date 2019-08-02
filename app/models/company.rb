@@ -14,6 +14,10 @@
 
 class Company < ApplicationRecord
   
+  def Company.alphabetize
+    Company.all.order(:name => :asc)
+  end
+  
   def age
     Date.today.year - founded_on.year
   end
